@@ -1,0 +1,70 @@
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Evaluator {
+
+    public static int evalPostFix (String strPostfixExp) {
+        Scanner scn = new Scanner(strPostfixExp);
+        Stack<Integer> stack = new Stack<>();
+
+        while (scn.hasNext()) {
+            String strCurrent = scn.next();
+            if (Character.isDigit(strCurrent.charAt(0))) {
+                stack.push(Integer.parseInt(strCurrent));
+                } else {
+                int operand2 = stack.pop();
+                int operand1 = stack.pop();
+                switch (strCurrent) {
+                    case "^":
+                        stack.push((int) Math.pow(operand1, operand2));
+                        break;
+                    case "*":
+                        stack.push(operand1 * operand2);
+                        break;
+                    case "/":
+                        if (operand2 == 0) {
+                            throw new Exception("Divide by zero");
+                        }
+                        stack.push(operand1 / operand2);
+                        break;
+                    case "%":
+                        stack.push(operand1 % operand2);
+                        break;
+                    case "+":
+                        stack.push(operand1 + operand2);
+                        break;
+                    case "-":
+                        stack.push(operand1 - operand2);
+                        break;
+                    case ">":
+                        stack.push(operand1 > operand2 ? 1 : 0);
+                        break;
+                    case ">=":
+                        stack.push(operand1 >= operand2 ? 1 : 0);
+                        break;
+                    case "<":
+                        stack.push(operand1 < operand2 ? 1 : 0);
+                        break;
+                    case "<=":
+                        stack.push(operand1 <= operand2 ? 1 : 0);
+                        break;
+                    case "==":
+                        stack.push(operand1 == operand2 ? 1 : 0);
+                        break;
+                    case "!=":
+                        stack.push(operand1 != operand2 ? 1 : 0);
+                        break;
+                    case "&&":
+                        stack.push((operand1 != 0 && operand2 != 0)  1 : 0);
+                        break;
+                    case "||":
+                        stack.push((operand1 != 0 || operand2 != 0)  1 : 0);
+                        break;
+                }
+            }
+        }
+
+        scn.close();
+        return stack.pop();
+    }
+}
