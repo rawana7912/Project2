@@ -14,6 +14,8 @@
     OSP		2024-07-20	Original Version of Code
     OSP     2024-07-23  Deleted Converter class, added code to remove spaces from each expression, and
     added clarifying comments
+    RTA     2024-07-25  Moved bufRead.close statement so that the BufferedReader closes right after
+    reading the file and added a try-catch statement to deal with any invalid expressions or operators
 ----------------------------------------------------------------------------------------------------------
 */
 
@@ -34,6 +36,8 @@ public class Driver {
         while ((strTemp = bufRead.readLine()) != null){
             arrInput.add(strTemp);
         }
+        bufRead.close(); //BufferedReader is closed after reading file
+        
         for (int i = 0; i < arrInput.size(); i++){
             String currExp = arrInput.get(i);
             // Print original expression to console
@@ -52,8 +56,14 @@ public class Driver {
             }
             currExp = sbUsableExp.toString();
 
-            /* FIXME result of ExpressionParser.evalExpression here */
+            try {
+                int result = ExpressionParser.evalExpression(currExp);//Evaluate using ExpressionParser
+                System.out.println(result);
+            } catch (Exception err) { //Added to handle any exceptions
+                System.out.println("Error - Cannot evaluate expression: " + err.getMessage());
+          }
+            
         }
-        bufRead.close();
+        
     }
 }
