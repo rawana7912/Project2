@@ -41,7 +41,7 @@ public class Driver {
         for (int i = 0; i < arrInput.size(); i++){
             String currExp = arrInput.get(i);
             // Print original expression to console
-            System.out.println("Expression " + i + ": " + arrInput.get(i));
+            System.out.println("\nExpression " + (i + 1) + ": " + arrInput.get(i));
             // Prints the result of the parsed expression to the console
             System.out.print("\tResult: ");
 
@@ -55,7 +55,6 @@ public class Driver {
                 }
             }
             currExp = sbUsableExp.toString();
-
             try {
                 int result = ExpressionParser.evalExpression(currExp);//Evaluate using ExpressionParser
                 System.out.println(result);

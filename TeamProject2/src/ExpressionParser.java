@@ -61,19 +61,29 @@ public class ExpressionParser {
                 // '(' is encountered, remove '(' from stack
                 operators.pop();
 
-            } else if (isOperator(curr)) //checks if char is operator
-                // current char is an operator
-                 while (!operators.isEmpty() && precedence(String.valueOf(curr)) <= precedence(operators.peek())) {
-                       ints.push(evaluate(operators, ints));
-                      }
-                       operators.push(String.valueOf(curr));
-                    }
-                  
-                while (!operators.isEmpty()) { //Evaluate remaining operators in stack as well as processing
-                      ints.push(evaluate(operators, ints));
-                 }
-                   return ints.pop();
-              }
+            } else if (isOperator(curr)) {//checks if char is operator
+                StringBuilder operatorStr = new StringBuilder();
+                int j = i;
+                // Same as before, make sure all elemests of operator are accounted for
+                while ( j < expression.length() && isOperator(expression.charAt(j)) &&
+                expression.charAt(j) != '('){
+                    // Get entire operator, not just first element (e.g. >= instead of just >)
+                    operatorStr.append(expression.charAt(j));
+                    i = j;
+                    j++;
+                }
+
+                while (!operators.isEmpty() && precedence(String.valueOf(operatorStr)) <= precedence(operators.peek())) {
+                    ints.push(evaluate(operators, ints));
+                }
+                operators.push(String.valueOf(operatorStr));
+            }
+        }
+        while (!operators.isEmpty()) { //Evaluate remaining operators in stack as well as processing
+            ints.push(evaluate(operators, ints));
+        }
+        return ints.pop();
+    }
     
     /**
      * Determines if a character is an operator 
