@@ -47,7 +47,7 @@ public class ExpressionParser {
                     j++;
                 }
                 // When all digits are accounted for, push current number into ints stack
-                ints.push(Integer.valueOf(expression.charAt(j)));
+                ints.push(Integer.valueOf(numStr.toString()));
 
             } else if (curr == '('){
                 // Push '(' to the operaters stack
@@ -61,28 +61,32 @@ public class ExpressionParser {
                 // '(' is encountered, remove '(' from stack
                 operators.pop();
 
-            } else {
+            } else if (isOperator(curr)) //checks if char is operator
                 // current char is an operator
                  while (!operators.isEmpty() && precedence(String.valueOf(curr)) <= precedence(operators.peek())) {
                        ints.push(evaluate(operators, ints));
+                      }
                        operators.push(String.valueOf(curr));
                     }
                   }
-                while (!operators.isEmpty()) {
+                while (!operators.isEmpty()) { //Evaluate remaining operators in stack as well as processing
                       ints.push(evaluate(operators, ints));
                  }
                    return ints.pop();
               }
 
-    
-                /* FIXME continue operator evaluation from here
-                 * code so far is almost exactly the same as the ExpToBT method from project 3,
-                 * so make sure that method's code and the algorithm from the website I sent line up as you continue
-                 */
             }
         }
     }
-
+    /**
+     * Determines if a character is an operator 
+     * @param ch : character being checked 
+     * @return : True if the character is an operator, false otherwise
+     */
+     private static boolean isOperator(char ch) {
+          return ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '%' || ch == '^' ||
+                 ch == '>' || ch == '<' || ch == '=' || ch == '!' || ch == '&' || ch == '|';
+         } 
     /**
      * Evaluates an expression made of the top operator of a stack and the top two integers of a stack
      * @param ops : A stack of operators
