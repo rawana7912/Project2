@@ -13,7 +13,8 @@
     OSP		2024-07-20	Created the infixToPostfix and precedence methods, finished the precedence method.
     OSP     2024-07-23  Got rid of the infixToPostfix method, started the evalExpression method, created
     and finished the evaluate method
-    RTA     2024-07-25  Finished evalExpression method
+    RTA     2024-07-25  Finished evalExpression method to process, edited lines on precedence method for 
+    clarity and style consistency
 ----------------------------------------------------------------------------------------------------------
 */
 
@@ -134,15 +135,28 @@ public class ExpressionParser {
      * @throws IllegalArgumentException : Operator not supported
      */
     public static int precedence(String operator){
-        if (operator.equals("^")){ return 7; }
+        if (operator.equals("^")){ 
+            return 7;
+            }
         if (operator.equals("*") || operator.equals("/") || operator.equals("%")){
-            return 6;}
-        if (operator.equals("+") || operator.equals("-")){ return 4; }
+            return 6;
+            }
+        if (operator.equals("+") || operator.equals("-")){     
+            return 4;         
+            }
         if (operator.equals(">") || operator.equals(">=") || operator.equals("<") ||
-        operator.equals("<=")){ return 3; }
-        if (operator.equals("==") || operator.equals("!=")){ return 2; }
-        if (operator.equals("&&")){ return 2; }
-        if (operator.equals("||")){ return 1; }
+        operator.equals("<=")){     
+            return 3;             
+            }
+        if (operator.equals("==") || operator.equals("!=")){
+            return 2; 
+            }
+        if (operator.equals("&&")){ 
+            return 2; 
+            }
+        if (operator.equals("||")){ 
+            return 1; 
+            }
         throw new IllegalArgumentException("Operator not supported: " + operator);
     }
 }
