@@ -68,16 +68,13 @@ public class ExpressionParser {
                       }
                        operators.push(String.valueOf(curr));
                     }
-                  }
+                  
                 while (!operators.isEmpty()) { //Evaluate remaining operators in stack as well as processing
                       ints.push(evaluate(operators, ints));
                  }
                    return ints.pop();
               }
-
-            }
-        }
-    }
+    
     /**
      * Determines if a character is an operator 
      * @param ch : character being checked 
