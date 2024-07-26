@@ -13,6 +13,7 @@
     OSP		2024-07-20	Created the infixToPostfix and precedence methods, finished the precedence method.
     OSP     2024-07-23  Got rid of the infixToPostfix method, started the evalExpression method, created
     and finished the evaluate method
+    RTA     2024-07-25  Finished evalExpression method
 ----------------------------------------------------------------------------------------------------------
 */
 
@@ -61,7 +62,18 @@ public class ExpressionParser {
 
             } else {
                 // current char is an operator
+                 while (!operators.isEmpty() && precedence(String.valueOf(curr)) <= precedence(operators.peek())) {
+                       ints.push(evaluate(operators, ints));
+                       operators.push(String.valueOf(curr));
+                    }
+                  }
+                while (!operators.isEmpty()) {
+                      ints.push(evaluate(operators, ints));
+                 }
+                   return ints.pop();
+              }
 
+    
                 /* FIXME continue operator evaluation from here
                  * code so far is almost exactly the same as the ExpToBT method from project 3,
                  * so make sure that method's code and the algorithm from the website I sent line up as you continue
